@@ -1,7 +1,6 @@
 const Discord = require("discord.js");
 const fetch = require("node-fetch");
 
-// 環境変数としてapplicationId, guildId, tokenの3つが必要です
 const {
   DISCORD_BOT_TOKEN,
   MIIBO_API_TOKEN,
@@ -23,16 +22,16 @@ client.on("messageCreate", async (message) => {
 
   if (message.content === "hi") {
     message.channel.send("hi!");
-  } else if (message.content === "imada") {
-    message.channel.send("いまだくんはおさかなですよー");
   } else if (message.mentions.has(client.user)) {
     try {
-      const content = message.content.replace(/<@\d+>/g, "").trim(); // メンションを削除してトリムする
+      // メンションを削除してトリムする
+      const content = message.content.replace(/<@\d+>/g, "").trim();
 
       const responseMessage = await fetchMebo(content, message.channel.id);
       message.channel.send(responseMessage);
     } catch (err) {
       console.error(err);
+      // TODO: 固定のテキストは別ファイルに切り出す
       message.channel.send(
         "す...すみません！壊しちゃいました...ちょっと待ってて下さい..."
       );
